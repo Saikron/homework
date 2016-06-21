@@ -28,11 +28,10 @@ import java.util.List;
 public class OnExceptionDLQWithTxSpringRoutesTest extends CamelSpringTestSupport {
 
     private final static String records =
-            "Robocops,NA,true,Bill,Smith,100 N Park Ave.,Phoenix,AZ,85017,200-555-1000\n" +
-                    "MountainBikers,SA,true,George,Jungle,1101 Smith St.,Raleigh,NC,27519,600-555-7000\n" +
-                    "MicroservicesVision,WA,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,100-400-2000\n"
-                    +
-                    "Error,,,EU,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,900-000-4545";
+    		"Robocops,NA,true,Bill,Smith,100 N Park Ave.,Phoenix,AZ,85017,200-555-1000\n" +
+    				"Error,,,EU,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,900-000-4545\n" +
+                    	"MountainBikers,SA,true,George,Jungle,1101 Smith St.,Raleigh,NC,27519,600-555-7000\n" +
+                    		"MicroservicesVision,WA,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,100-400-2000\n";
 
     private final static String[] jsonRecords = {
             "{\"company\":{\"name\":\"Robocops\",\"geo\":\"NA\",\"active\":true},\"contact\":{\"firstName\":\"Bill\",\"lastName\":\"Smith\",\"streetAddr\":\"100 N Park Ave.\",\"city\":\"Phoenix\",\"state\":\"AZ\",\"zip\":\"85017\",\"phone\":\"200-555-1000\"}}",
@@ -109,6 +108,8 @@ public class OnExceptionDLQWithTxSpringRoutesTest extends CamelSpringTestSupport
                 msg.getHeader("error-message"));
 
         // 3 messages should be received from the output-usecase queue and containig the correct json response resulting from CSV2JSON transformation
+        // James Lopez - this will actually fail quite often depending on how long the first part of your routes take if you don't give it a second to parse files
+        Thread.sleep(3000);
         exchanges = mockOutput.getExchanges();
         assertEquals(3, exchanges.size());
         int i = 0;

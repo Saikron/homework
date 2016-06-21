@@ -34,17 +34,17 @@
                 <constant>hello</constant>
             </setBody>
             <to uri="amq:queue:usecase-input"/>
-            <to uri="amq:queue:usecase-output"/>
+            <to uri="amq:topic:usecase-output"/>
         </route>
 
         <route id="queue-input-log">
             <from uri="amq:queue:usecase-input"/>
-            <log message="MSG - Queue Input : ${body}"/>
+            <log loggingLevel="INFO" message="MSG - Queue Input : ${body}"/>
         </route>
 
         <route id="queue-output-log">
-            <from uri="amq:queue:usecase-output"/>
-            <log message="MSG - Queue Output : ${body}"/>
+            <from uri="amq:topic:usecase-output"/>
+            <log loggingLevel="INFO" message="MSG - Queue Output : ${body}"/>
         </route>
     </camelContext>
 

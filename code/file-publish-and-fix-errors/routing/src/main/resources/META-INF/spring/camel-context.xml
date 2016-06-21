@@ -21,23 +21,113 @@
 
     <!-- Spring JMS TxManager -->
     <bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+    	<property name="connectionFactory" ref="jmsConnectionFactory" />
     </bean>
+    
+    <bean id="myRedeliveryPolicy" class="org.apache.camel.processor.RedeliveryPolicy">
+	    <property name="maximumRedeliveries" value="0"/>
+	</bean>
 
     <!-- JMS ConnectionFactory  -->
     <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    	<property name="brokerURL" value="tcp://localhost:61616"/>
+    	<property name="userName" value="admin"/>
+    	<property name="password" value="admin"/>
     </bean>
+    
+    <bean id="jmsConfig" class="org.apache.camel.component.jms.JmsConfiguration">
+	   <property name="connectionFactory" ref="jmsConnectionFactory"/>
+	   <property name="concurrentConsumers" value="1"/>
+	</bean>
 
     <!-- ActiveMQ Camel Component - Tx -->
     <bean id="amq-tx" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    	<property name="transactionManager" ref="jmsTransactionManager"/>
+    	<property name="configuration" ref="jmsConfig"/>
+    	<property name="transacted" value="true"/>
+    	<property name="cacheLevelName" value="CACHE_CONSUMER" />
     </bean>
 
     <!-- ActiveMQ Camel Component - No Tx -->
     <bean id="amq-notx" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    	<property name="configuration" ref="jmsConfig"/>
     </bean>
 
     <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
 
         <propertyPlaceholder id="properties" location="fabric8/route.properties"/>
+        
+        <errorHandler id="defaultEH">
+		  <redeliveryPolicy maximumRedeliveries="3"/>
+		</errorHandler>	
+        
+         <dataFormats>
+	    	<!-- here we define a Json data format with the id jack and that it should use the TestPojo as the class type when
+	         doing unmarshal. The unmarshalTypeName is optional, if not provided Camel will use a Map as the type -->
+	    	<json id="accountJson" library="Jackson" unmarshalTypeName="org.globex.Account"/>
+	    	<json id="json" library="Jackson"/>
+			<bindy type="Csv" classType="org.acme.Customer" id="csv"/>
+		</dataFormats>
+        
+        <onException redeliveryPolicyRef="myRedeliveryPolicy">
+		    <exception>java.lang.IllegalArgumentException</exception>	  
+		    <handled>
+		      <constant>true</constant>
+		    </handled>				 
+		    <log loggingLevel="INFO" message="++++++++++++++++ Sending exception to error-queue..."/> 
+		    <setHeader headerName="error-code">
+					<constant>111</constant>
+			</setHeader>
+			<setHeader headerName="error-message">
+					<simple>${exception.message}</simple>
+			</setHeader>
+		    <to uri="direct:error-queue"/>
+		</onException>
+		  
+		<route id="direct-error-queue">
+        	<from uri="direct:error-queue"/>
+        	<log loggingLevel="INFO" message="++++++++++++++++ Inside direct:error-queue..."/> 
+        	<to	id="error-queue-endpoint" uri="amq-notx:{{topicNotification}}"/>
+        </route>  
+        
+        <route id="file-queue">
+        	<from uri="file:src/data/csv?fileName=customers.csv"/>
+        	<to uri="amq-notx:{{queueInput}}"/>
+        	<log loggingLevel="INFO" message="+++++++++++++++ After sending to queueInput"/>
+        </route>
+        
+        <route id="queue-split-transform-queue">
+        	<from uri="amq-notx:{{queueInput}}"/>
+        	<log loggingLevel="INFO" message="++++++++++++++++ Inside direct:split-transform-queue..."/> 
+        	<split id="splitter" streaming="true" parallelProcessing="false" timeout="0">
+	            <tokenize token="\n"/>
+	            <to uri="dozer:csv2json?mappingFile=transformation.xml&amp;sourceModel=org.acme.Customer&amp;targetModel=org.globex.Account&amp;marshalId=json&amp;unmarshalId=csv"/>
+	            <to uri="file:src/data/json?fileName=csv-record-${property.CamelSplitIndex}.json"/>
+				<log id="output-queue-endpoint" loggingLevel="INFO" message="++++++++++++++++ SPLITTING"/>
+        	</split> 
+        </route>
+        
+        <route>
+        	<from uri="file:src/data/json"/>
+        	<unmarshal ref="accountJson"/>
+         	<to uri="amq-notx:{{queueOutput}}"/>
+        	<to uri="sql:INSERT INTO USECASE.T_ACCOUNT(COMPANY_NAME, COMPANY_GEO, COMPANY_ACTIVE, CONTACT_FIRST_NAME, CONTACT_LAST_NAME, CONTACT_ADDRESS, CONTACT_CITY, CONTACT_STATE, CONTACT_ZIP, CONTACT_PHONE) VALUES (:#${body.company.name}, :#${body.company.geo}, :#${body.company.active}, :#${body.contact.firstName}, :#${body.contact.lastName}, :#${body.contact.streetAddr}, :#${body.contact.city}, :#${body.contact.state}, :#${body.contact.zip}, :#${body.contact.phone})?dataSource=usecaseDB"/>
+        </route>
+        
+        <route>
+        	<from uri="amq-notx:{{topicNotification}}"/>
+        	<log loggingLevel="INFO" message="++++++++++++++++ Inside ERROR SQL INSERT..."/> 
+        	<to uri="sql:INSERT INTO USECASE.T_ERROR(ERROR_CODE, ERROR_MESSAGE, MESSAGE, STATUS) VALUES (:#${header.error-code}, :#${header.error-message}, :#${body}, 'ERROR');?dataSource=usecaseDB"/>
+        </route>
+        
+        <route>
+		  <from uri="sql:SELECT ID, MESSAGE FROM USECASE.T_ERROR WHERE STATUS='FIXED';?consumer.delay=10000&amp;consumer.onConsume=UPDATE USECASE.T_ERROR SET STATUS='CLOSD' WHERE ID=:#id;&amp;outputType=SelectOne&amp;dataSource=usecaseDB"/>
+		  <setBody>
+		  	<simple>${body.[MESSAGE]}</simple>
+		  </setBody>
+		  <log loggingLevel="INFO" message="=== NEW BODY: ${body}"/>
+		  <to uri="amq-notx:{{queueInput}}"/>
+		</route>
 
     </camelContext>
 </beans>

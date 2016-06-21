@@ -6,6 +6,7 @@ import org.apache.activemq.broker.BrokerService;
 import org.apache.directory.server.annotations.CreateLdapServer;
 import org.apache.directory.server.annotations.CreateTransport;
 import org.apache.directory.server.core.annotations.ApplyLdifFiles;
+import org.apache.directory.server.core.annotations.CreatePartition;
 import org.apache.directory.server.core.integ.AbstractLdapTestUnit;
 import org.apache.directory.server.core.integ.FrameworkRunner;
 import org.apache.directory.server.ldap.LdapServer;
@@ -20,8 +21,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-@RunWith(FrameworkRunner.class) @CreateLdapServer(transports = {
-        @CreateTransport(protocol = "LDAP", port = 1024) }) @ApplyLdifFiles("org/fuse/usecase/activemq.ldif") public class LDAPActiveMQTest
+@RunWith(FrameworkRunner.class) 
+	
+	@CreateLdapServer(transports = {
+    @CreateTransport(protocol = "LDAP", port = 1024) }) 
+	@CreatePartition(
+	      name = "redhat",
+	      suffix = "dc=redhat, dc=com"
+	  )
+	@ApplyLdifFiles("org/fuse/usecase/activemq.ldif") public class LDAPActiveMQTest
         extends AbstractLdapTestUnit {
 
     public BrokerService broker;

@@ -9,10 +9,58 @@
        http://www.springframework.org/schema/osgi/spring-osgi.xsd
        http://camel.apache.org/schema/spring
        http://camel.apache.org/schema/spring/camel-spring.xsd">
+       
+    <bean id="dozerConverterLoader" class="org.apache.camel.converter.dozer.DozerTypeConverterLoader" />
+   
+	<bean id="mapper" class="org.apache.camel.converter.dozer.DozerBeanMapperConfiguration">
+	  <property name="mappingFiles">
+	    <list>
+	      <value>transformation.xml</value>
+	    </list>
+	  </property>
+	</bean>
 
     <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
 
         <propertyPlaceholder id="properties" location="fabric8/route.properties"/>
+        
+        
+        
+        <dataFormats>
+		    <!-- here we define a Json data format with the id jack and that it should use the TestPojo as the class type when
+		         doing unmarshal. The unmarshalTypeName is optional, if not provided Camel will use a Map as the type -->
+		    <json id="json" library="Jackson"/>
+			<bindy type="Csv" classType="org.acme.Customer" id="csv"/>
+		</dataFormats>
+        
+        
+         
+		  <onException>
+		  	
+<!-- 		    the exception is full qualified names as plain strings -->
+<!-- 		    there can be more just add a 2nd, 3rd exception element (unbounded) -->
+		    <exception>java.lang.IllegalArgumentException</exception>
+		    <log message="entering exception block" />
+		    
+		  
+		    
+		    <to uri="file:src/data/error?fileName=account-${property.CamelSplitIndex}.json" />
+		  </onException>
+        
+        <route>
+       
+       
+	        <from uri="file:src/data/inbox?fileName=customers.csv&amp;noop=true" />
+	         <log message="picked up file  ${body} "/>
+	        <split id="splitter" streaming="true"
+            parallelProcessing="false" timeout="0">
+	            <tokenize token="\n"/>
+				<to uri="dozer:csv2json?mappingFile=transformation.xml&amp;sourceModel=org.acme.Customer&amp;targetModel=org.globex.Account&amp;marshalId=json&amp;unmarshalId=csv"/>
+	            <log message="sending to outfile ${body}"/>
+	            <to uri="file:src/data/json?fileName=csv-record-${property.CamelSplitIndex}.json" />
+        	</split>
+	        
+		</route>
 
     </camelContext>
 </beans>

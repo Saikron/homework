@@ -18,7 +18,31 @@ public class AccountAggregator implements AggregationStrategy {
 
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
-
+    	System.out.println(">>>>>>>>>>>>>>>>> INSIDE AGGREGATOR");
+    	
+    	if (oldExchange == null){
+    		// must be first run
+    		System.out.println(">>> oldExchange was null\n");
+    		return newExchange;
+    	}
+    	
+    	System.out.println("+++++++++++++++++++++++ oldExchange was NOT NULL");
+    	
+    	Account account = oldExchange.getIn().getBody(Account.class);
+    	
+    	System.out.println("+++++++++++++++++++++++ Created account object");
+    	
+    	CorporateAccount corpAccount = newExchange.getIn().getBody(CorporateAccount.class);
+    	
+    	System.out.println("+++++++++++++++++++++++ Created corpAccount object");
+    	
+    	System.out.println(">> newExchange object: " + newExchange.getIn().getBody());
+    	
+    	account.setClientId(corpAccount.getId());
+    	account.setSalesRepresentative(corpAccount.getSalesContact());
+    	
+    	// since we aren't running parallel, we believe this will always be Account type
+    	oldExchange.getIn().setBody(account, Account.class);
         return oldExchange;
     }
     

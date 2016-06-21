@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:camel="http://camel.apache.org/schema/spring" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:osgi="http://www.springframework.org/schema/osgi"
-	       xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xmlns:camel="http://camel.apache.org/schema/spring" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs" 
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:context="http://www.springframework.org/schema/context"
 	
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
@@ -10,14 +13,46 @@
                  http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd 
                  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	 <osgi:reference id="activeMq" interface="org.apache.camel.Component"/> 
+<!-- 	 <osgi:reference id="activeMq" interface="org.apache.camel.Component"/>  -->
 	
-	<bean id="demographicImpl" class="com.redhat.usecase.service.impl.DEIMServiceImpl" />
+	<bean id="demographicImpl" class="com.redhat.usecase.service.impl.DEIMServiceImpl"/>
 	<jaxrs:server id="demoGraphicsService" address="http://localhost:9098/cxf/demos">
 		<jaxrs:serviceBeans>
 			<ref bean="demographicImpl" />
 		</jaxrs:serviceBeans>
 	</jaxrs:server>
+	
+	<!-- JMS ConnectionFactory  -->
+    <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://localhost:61617"/>
+        <property name="userName" value="admin"/>
+        <property name="password" value="admin"/>
+    </bean>
+
+    <bean id="jmsConfig" class="org.apache.camel.component.jms.JmsConfiguration">
+           <property name="connectionFactory" ref="jmsConnectionFactory"/>
+           <property name="concurrentConsumers" value="1"/>
+        </bean>
+        
+    <!-- Spring JMS TxManager -->
+    <bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+        <property name="connectionFactory" ref="jmsConnectionFactory" />
+    </bean>
+
+    <!-- ActiveMQ Camel Component - Tx -->
+    <bean id="amq-tx" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="transactionManager" ref="jmsTransactionManager"/>
+        <property name="configuration" ref="jmsConfig"/>
+        <property name="transacted" value="true"/>
+        <property name="cacheLevelName" value="CACHE_CONSUMER" />
+    </bean>
+
+    <!-- ActiveMQ Camel Component - No Tx -->
+    <bean id="amq-notx" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="configuration" ref="jmsConfig"/>
+    </bean>
+	
+	
 
 	<camel:camelContext id="restInbound" trace="false" >
 	                           
@@ -26,8 +61,18 @@
 				partClass="com.customer.app.Person" />
 		</camel:dataFormats>
 		<camel:route id="handleRest">
+				<camel:from uri="direct:integrateRoute"/>
+				<camel:log loggingLevel="INFO" message=">>> INSIDE handleRest"/>
+				
+				<!-- marshal to xml -->
+				<!-- inOut from processor to reply that the transform is done -->
+				<!-- activemq producer -->
+				<camel:inOut uri="direct:"/>
+				<camel:to id="inbound-queue" uri="amq-notx:q.empi.deim.in"/>
 		</camel:route>
 		<camel:route id="addRoute">
+			<camel:from uri="direct:toAddRoute"/>
+			<camel:to uri="direct:devnull"/>
 		</camel:route>
 	</camel:camelContext>
 	

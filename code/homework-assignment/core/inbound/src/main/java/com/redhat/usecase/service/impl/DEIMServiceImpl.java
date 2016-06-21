@@ -11,10 +11,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.camel.CamelContext;
 import org.apache.camel.CamelExecutionException;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.cxf.jaxrs.impl.ResponseBuilderImpl;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.customer.app.Person;
 import com.customer.app.response.ESBResponse;
@@ -30,6 +32,12 @@ public class DEIMServiceImpl implements DEIMService {
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_XML)
 	public Response addPerson(Person person) {
+		// TODO fix it
+		template.requestBody(person);
+		System.out.println("========================= REST SUCCESS ============");
+		Response response = new ResponseBuilderImpl().status(Status.OK).build();
+		return response;
 	}
+	
 
 }

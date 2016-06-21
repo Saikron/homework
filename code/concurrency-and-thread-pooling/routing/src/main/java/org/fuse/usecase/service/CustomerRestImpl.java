@@ -14,6 +14,7 @@ public class CustomerRestImpl implements CustomerRest {
     private static final String EAST_REGION = "EAST_AMERICA";
 
     @Override public Account enrich(Account account) {
+    	System.out.println(">>> Inside CustomerRestImpl thread: " + Thread.currentThread().getId());
         Company company = account.getCompany();
         String region = company.getGeo();
         switch (region) {

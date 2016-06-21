@@ -21,9 +21,27 @@
         </destinationPolicy>
 
         <plugins>
+        	<!--  use JAAS to authenticate using the login.config file on the classpath to configure JAAS -->
+  <jaasAuthenticationPlugin configuration="LdapConfiguration" /> 
+  <!--  lets configure a destination based role/group authorization mechanism -->
+  <authorizationPlugin> 
+    <map>
+        <cachedLDAPAuthorizationMap
+            connectionURL="ldap://localhost:33389"
+            connectionUsername="uid=admin,ou=User,ou=ActiveMQ,ou=system"
+            connectionPassword="sunflower"
+            queueSearchBase="ou=Queue,ou=Destination,ou=ActiveMQ,ou=system"
+            topicSearchBase="ou=Topic,ou=Destination,ou=ActiveMQ,ou=system"
+            tempSearchBase="ou=Temp,ou=Destination,ou=ActiveMQ,ou=system"
+            refreshInterval="300000"
+            legacyGroupMapping="false"
+        />
+    </map>
+  </authorizationPlugin> 
         </plugins>
 
         <transportConnectors>
+            <transportConnector name="tcp" uri="tcp://localhost:61616"/>
         </transportConnectors>
     </broker>
 </beans>

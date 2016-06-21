@@ -25,6 +25,8 @@ public class ValidateTransformationTest extends CamelSpringTestSupport {
     @Produce(uri = "direct:csv2json-test-input") private ProducerTemplate startEndpoint;
 
     @Test public void transform() throws Exception {
+    	String body = "Rotobots,NA,true,Bill,Smith,100 N Park Ave.,Phoenix,AZ,85017,602-555-1100";
+    	
     }
 
     @Override protected RouteBuilder createRouteBuilder() throws Exception {

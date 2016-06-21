@@ -45,6 +45,16 @@
         <apache.cxf.version>3.0.4.redhat-621084</apache.cxf.version>
         <apache.cxf.plugin.version>3.0.4.redhat-621084</apache.cxf.plugin.version>
     </properties>
+    
+    <dependencies>
+    	<dependency>
+                <groupId>org.jboss.fuse.bom</groupId>
+                <artifactId>jboss-fuse-parent</artifactId>
+                <version>6.2.1.redhat-084</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>

@@ -32,7 +32,7 @@
 
     <cxf:rsServer id="customerRestService" address="http://localhost:9191/rest"
                   serviceClass="org.fuse.usecase.service.CustomerRest"
-                  loggingFeatureEnabled="false">
+                  loggingFeatureEnabled="true">
         <cxf:providers>
             <ref bean="jsonProvider"/>
         </cxf:providers>
@@ -56,8 +56,90 @@
       <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider"/>
     -->
     <bean id="jsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider"/>
+    
 
     <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
         <propertyPlaceholder id="properties" location="fabric8/route.properties"/>
+        
+        <dataFormats>
+	    	<!-- here we define a Json data format with the id jack and that it should use the TestPojo as the class type when
+	         doing unmarshal. The unmarshalTypeName is optional, if not provided Camel will use a Map as the type -->
+	    	<json id="accountJson" library="Jackson" unmarshalTypeName="org.globex.Account"/>
+	    
+		</dataFormats>
+        
+        <route>
+        	<from uri="file:src/data/json"/>
+        	<unmarshal ref="accountJson"/>
+        	<multicast strategyRef="reconcileData">
+<!--         		<log loggingLevel="INFO" message=">>>>>>>>>>>>>>>>>>>>>>>>>> MULTICASTING"/> -->
+        		<to uri="direct:callRestEndpoint"/>
+<!--         		<log loggingLevel ="INFO" message=">>>>> MULTICAST WS CALL"/> -->
+        		<to	uri="direct:callWSEndpoint"/>
+        	</multicast>
+<!--         	CLIENT_ID, SALES_CONTACT, COMPANY_NAME, COMPANY_GEO, COMPANY_ACTIVE, CONTACT_FIRST_NAME, CONTACT_LAST_NAME, CONTACT_ADDRESS, CONTACT_CITY, CONTACT_STATE, CONTACT_ZIP, CONTACT_PHONE, CREATION_DATE, CREATION_USER  -->
+<!--         		<log loggingLevel ="INFO" message=">>>>> Aggregated Body: ${body}"/> -->
+<to uri="sql:INSERT INTO USECASE.T_ACCOUNT(CLIENT_ID, SALES_CONTACT, COMPANY_NAME, COMPANY_GEO, COMPANY_ACTIVE, CONTACT_FIRST_NAME, CONTACT_LAST_NAME, CONTACT_ADDRESS, CONTACT_CITY, CONTACT_STATE, CONTACT_ZIP, CONTACT_PHONE) VALUES (:#${body.clientId}, :#${body.salesRepresentative}, :#${body.company.name}, :#${body.company.geo}, :#${body.company.active}, :#${body.contact.firstName}, :#${body.contact.lastName}, :#${body.contact.streetAddr}, :#${body.contact.city}, :#${body.contact.state}, :#${body.contact.zip}, :#${body.contact.phone})?dataSource=usecaseDB"/>
+
+<!--         	<log loggingLevel="INFO" -->
+
+<!--                  message=">> Aggregated result: Account : ${body.clientId}, ${body.salesRepresentative}; Company : ${body.company.name}, ${body.company.geo}, ${body.company.active}; Contact -->
+
+<!--  : ${body.contact.firstName}, ${body.contact.lastName}, ${body.contact.streetAddr}, ${body.contact.city}, ${body.contact.state}, ${body.contact.zip}, ${body.contact.phone}"/> -->
+        </route>
+        
+        <route>
+			<from uri="direct:callRestEndpoint"/>
+			<log loggingLevel="INFO" message=">>>>>>>>>>>>>>>>>>>>>>>>>> DIRECT CALL TO REST ENDPOINT"/>
+<!-- 			Content-Type=application-json -->
+<!-- 			Accept=application-json -->
+<!-- 			CamelHTTPMethod=POST -->
+<!-- 			CamelHttpPath=/customerservice/enrich -->
+<!-- 			CamelCxfRsUsingHttpAPI=True -->
+				
+				<setHeader headerName="Content-Type">
+					<constant>application/json</constant>
+				</setHeader>
+				<setHeader headerName="Accept">
+					<constant>application/json</constant>
+				</setHeader>
+				<setHeader headerName="CamelHTTPMethod">
+					<constant>POST</constant>
+				</setHeader>
+				<setHeader headerName="CamelHttpPath">
+					<constant>/customerservice/enrich</constant>
+				</setHeader>
+				<setHeader headerName="CamelCxfRsUsingHttpAPI">
+					<constant>True</constant>
+				</setHeader>
+			
+			<inOut uri="cxfrs:bean:customerRestServiceClient"/>   
+			<bean beanType="org.fuse.usecase.ProcessorBean" method="convertEntityToString"/>
+
+            <unmarshal>
+
+                <json library="Jackson" unmarshalTypeName="org.globex.Account"/>
+
+            </unmarshal>  
+            <log loggingLevel="INFO" message=">>>>>>>>>>>>>>>>>>>>>>>>>> END DIRECT CALL TO REST ENDPOINT"/>
+			   
+        </route>
+        
+        <route>
+        	<from uri="cxfrs:bean:customerRestService"/>
+        	<bean ref="customerRestImplBean" method="enrich"/>
+        </route>
+        
+        <route>
+        	<from uri="direct:callWSEndpoint"/>
+        	<log loggingLevel="INFO" message=">>>>>>>>>>>>>>>>>>>>>>>>>> DIRECT CALL TO WS ENDPOINT"/>
+        	<inOut uri="cxf:bean:customerWebService"/>   
+        </route>
+        
+        <route>
+        	<from uri="cxf:bean:customerWebService"/>
+        	<bean ref="customerWSImplBean" method="updateAccount"/>
+        </route>
+        
     </camelContext>
 </beans>

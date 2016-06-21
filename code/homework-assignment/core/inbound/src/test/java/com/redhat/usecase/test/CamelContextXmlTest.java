@@ -21,10 +21,19 @@ import javax.xml.xpath.XPathExpressionException;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
 import org.apache.activemq.camel.component.ActiveMQComponent;
+import org.apache.camel.CamelContext;
+import org.apache.camel.CamelExecutionException;
+import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.builder.AdviceWithRouteBuilder;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.jms.JmsEndpoint;
+import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.apache.camel.util.KeyValueHolder;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
+import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -36,6 +45,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jms.connection.JmsTransactionManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -55,6 +65,8 @@ public class CamelContextXmlTest extends CamelSpringTestSupport {
 	// Templates to send to input endpoints
 	@Produce(uri = "direct:integrateRoute")
 	protected ProducerTemplate inputEndpoint;
+	@EndpointInject(uri = "mock:result")
+    protected MockEndpoint resultEndpoint;
 	BrokerService broker = null;
 
 	@Before
@@ -69,8 +81,34 @@ public class CamelContextXmlTest extends CamelSpringTestSupport {
 	}
 
 	@Test
-	public void testCamelRoute() throws Exception {
+	public void testCamelRoute() throws Throwable {
+		String expectedBody = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n  <Person xmlns=\"http://www.app.customer.com\"/>\n";
+		 
+        getMockEndpoint("mock:deim-queue").expectedBodiesReceived(expectedBody);
+ 
+        inputEndpoint.sendBody(new Person());
+ 
+        assertMockEndpointsSatisfied();
 	}
+	
+	@Override
+    protected RouteBuilder createRouteBuilder() {
+        return new RouteBuilder() {
+            public void configure() {
+            	// We will extend the route of the error queue to add a mock endpoint
+                try {
+					context.getRouteDefinition("handleRest").adviceWith(context, new AdviceWithRouteBuilder() {
+					    @Override public void configure() throws Exception {
+					        weaveById("inbound-queue").replace().to("mock:deim-queue");
+					    }
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        };
+    }
 
 	@After
 	public void destroy() {
@@ -97,6 +135,9 @@ public class CamelContextXmlTest extends CamelSpringTestSupport {
 	public static String replaceOSGiPropertyLoader(String springXmlLocation)
 			throws ParserConfigurationException, IOException, SAXException,
 			XPathExpressionException, TransformerException {
+		CamelContext context;
+		// TODO fix it
+		return null;
 	}
 
 }
