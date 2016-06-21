@@ -1,0 +1,628 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Fuse :: Use Case 3 :: Routing 1.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ routing ---
+[INFO] Deleting /home/jlopez/eip-class/experienced-integration-labs/code/file-publish-and-fix-errors/routing/target
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.0:resources (default-resources) @ routing ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] ignoreDelta true
+[INFO] Copying 9 resources
+[INFO] Copying file META-INF/spring/local/activemq-broker.xml
+[INFO] Copying file META-INF/spring/camel-context.xml
+[INFO] Copying file META-INF/spring/camel-inject.xml
+[INFO] Copying file log4j.properties
+[INFO] Copying file transformation.xml
+[INFO] Copying file fabric8/route.properties
+[INFO] Copying file schema/csv/customer.csv
+[INFO] Copying file schema/db/usecaseDB.sql
+[INFO] Copying file schema/json/account.json
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ routing ---
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 5 source files to /home/jlopez/eip-class/experienced-integration-labs/code/file-publish-and-fix-errors/routing/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.0:testResources (default-testResources) @ routing ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/jlopez/eip-class/experienced-integration-labs/code/file-publish-and-fix-errors/routing/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ routing ---
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 3 source files to /home/jlopez/eip-class/experienced-integration-labs/code/file-publish-and-fix-errors/routing/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.19.1:test (default-test) @ routing ---
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.fuse.usecase.OnExceptionDLQWithTXTest
+main INFO [org.fuse.usecase.OnExceptionDLQWithTXTest] - ********************************************************************************
+main INFO [org.fuse.usecase.OnExceptionDLQWithTXTest] - Testing: shouldGetMessageWithinDLQ(org.fuse.usecase.OnExceptionDLQWithTXTest)
+main INFO [org.fuse.usecase.OnExceptionDLQWithTXTest] - ********************************************************************************
+main DEBUG [org.fuse.usecase.OnExceptionDLQWithTXTest] - setUp test
+main DEBUG [org.fuse.usecase.OnExceptionDLQWithTXTest] - Using created route builder: Routes: []
+main INFO [org.apache.camel.impl.DefaultCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-1) is starting
+main INFO [org.apache.camel.management.DefaultManagementStrategy] - JMX is disabled
+main INFO [org.apache.camel.impl.converter.DefaultTypeConverter] - Loaded 186 type converters
+main INFO [org.apache.camel.impl.DefaultCamelContext] - AllowUseOriginalMessage is enabled. If access to the original message is not needed, then its recommended to turn this option off as it may improve performance.
+main INFO [org.apache.camel.impl.DefaultCamelContext] - StreamCaching is not in use. If using streams then its recommended to enable stream caching. See more details at http://camel.apache.org/stream-caching.html
+main INFO [org.apache.camel.impl.DefaultCamelContext] - Route: route1 started and consuming from: Endpoint[activemq://input]
+main INFO [org.apache.camel.impl.DefaultCamelContext] - Route: route2 started and consuming from: Endpoint[activemq://output]
+main INFO [org.apache.camel.impl.DefaultCamelContext] - Route: route3 started and consuming from: Endpoint[direct://error]
+main INFO [org.apache.camel.impl.DefaultCamelContext] - Total 3 routes, of which 3 is started.
+main INFO [org.apache.camel.impl.DefaultCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-1) started in 0.128 seconds
+main DEBUG [org.fuse.usecase.OnExceptionDLQWithTXTest] - Routing Rules are: [EventDrivenConsumerRoute[Endpoint[activemq://input] -> Channel[Splitter[on: tokenize(body, 
+) to: Pipeline[[Channel[Log(route1)[Incoming JMS message ${body}]], Channel[Unmarshal[org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat@2de23121]], Channel[Log(route1)[Message marshalled : ${body}]], Channel[sendTo(Endpoint[activemq://output])]]] aggregate: null]]], EventDrivenConsumerRoute[Endpoint[activemq://output] -> Channel[Log(route2)[Message received ${body}]]], EventDrivenConsumerRoute[Endpoint[direct://error] -> Pipeline[[Channel[Log(route3)[>> Direct endpoint called]], Channel[sendTo(Endpoint[mock://error])]]]]]
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [org.apache.activemq.broker.BrokerService] - Using Persistence Adapter: MemoryPersistenceAdapter
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [org.apache.activemq.broker.BrokerService] - Apache ActiveMQ 5.11.0.redhat-621084 (test-broker-1, ID:localhost.localdomain-37394-1464968502382-0:1) is starting
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [org.apache.activemq.broker.BrokerService] - Apache ActiveMQ 5.11.0.redhat-621084 (test-broker-1, ID:localhost.localdomain-37394-1464968502382-0:1) started
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [org.apache.activemq.broker.BrokerService] - For help or more information please see: http://activemq.apache.org
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.activemq.broker.BrokerService] - Temporary Store limit is 51200 mb, whilst the temporary data directory: /home/jlopez/eip-class/experienced-integration-labs/code/file-publish-and-fix-errors/routing/activemq-data/test-broker-1/tmp_storage only has 7364 mb of usable space - resetting to maximum available 7364 mb.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [org.apache.activemq.broker.TransportConnector] - Connector vm://test-broker-1 started
+main INFO [org.apache.camel.component.mock.MockEndpoint] - Asserting: Endpoint[mock://error] is satisfied
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message Robocops,NA,true,Bill,Smith,100 N Park Ave.,Phoenix,AZ,85017,200-555-1000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@60085c21
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message MountainBikers,SA,true,George,Jungle,1101 Smith St.,Raleigh,NC,27519,600-555-7000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@13bb7386
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message MicroservicesVision,WA,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,100-400-2000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@3170dc84
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message Error,,,EU,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,900-000-4545
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route3] - >> Direct endpoint called
+Camel (camel-1) thread #0 - JmsConsumer[input] ERROR [org.apache.camel.processor.DefaultErrorHandler] - Failed delivery for (MessageId: queue_input_ID_localhost.localdomain-37394-1464968502382-3_2_1_1_1 on ExchangeId: ID-localhost-localdomain-32784-1464968502003-0-7). Exhausted after delivery attempt: 1 caught: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified. Processed by failure processor: FatalFallbackErrorHandler[Pipeline[[Channel[SetHeader(error-code, 111)], Channel[SetHeader(error-message, Simple: exception.message)], Channel[SetBody(Simple: ${body})], Channel[sendTo(Endpoint[direct://error])]]]]
+
+Message History
+---------------------------------------------------------------------------------------------------------------------------------------
+RouteId              ProcessorId          Processor                                                                        Elapsed (ms)
+[route1            ] [route1            ] [activemq://input                                                              ] [        30]
+[route1            ] [log1              ] [log                                                                           ] [         0]
+[route1            ] [unmarshal1        ] [unmarshal[org.apache.camel.model.DataFormatDefinition@6403c0d5]               ] [         4]
+[                  ] [setHeader1        ] [setHeader[error-code]                                                         ] [         0]
+[                  ] [setHeader2        ] [setHeader[error-message]                                                      ] [         0]
+[                  ] [setBody1          ] [setBody[simple{${body}}]                                                      ] [         1]
+[                  ] [to1               ] [direct:error                                                                  ] [         0]
+[route3            ] [log4              ] [log                                                                           ] [         0]
+[route3            ] [to3               ] [mock:error                                                                    ] [         0]
+
+Exchange
+---------------------------------------------------------------------------------------------------------------------------------------
+Exchange[
+	Id                  ID-localhost-localdomain-32784-1464968502003-0-7
+	ExchangePattern     InOnly
+	Headers             {breadcrumbId=ID-localhost-localdomain-32784-1464968502003-0-1, CamelRedelivered=false, CamelRedeliveryCounter=0, error-code=111, error-message=No position 11 defined for the field: 19728, line: 1 must be specified, JMSCorrelationID=null, JMSDeliveryMode=2, JMSDestination=queue://input, JMSExpiration=0, JMSMessageID=ID:localhost.localdomain-37394-1464968502382-3:2:1:1:1, JMSPriority=4, JMSRedelivered=false, JMSReplyTo=null, JMSTimestamp=1464968502552, JMSType=null, JMSXGroupID=null, JMSXUserID=null}
+	BodyType            String
+	Body                Error,,,EU,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,900-000-4545
+]
+
+Stacktrace
+---------------------------------------------------------------------------------------------------------------------------------------
+java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.notNull(ObjectHelper.java:293)
+	at org.apache.camel.dataformat.bindy.BindyCsvFactory.bind(BindyCsvFactory.java:175)
+	at org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat.unmarshal(BindyCsvDataFormat.java:185)
+	at org.apache.camel.processor.UnmarshalProcessor.process(UnmarshalProcessor.java:69)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:121)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:83)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:662)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:590)
+	at org.apache.camel.processor.MulticastProcessor.process(MulticastProcessor.java:237)
+	at org.apache.camel.processor.Splitter.process(Splitter.java:104)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.util.AsyncProcessorHelper.process(AsyncProcessorHelper.java:109)
+	at org.apache.camel.processor.DelegateAsyncProcessor.process(DelegateAsyncProcessor.java:87)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:103)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:562)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.invokeListener(AbstractMessageListenerContainer.java:500)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doExecuteListener(AbstractMessageListenerContainer.java:468)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.doReceiveAndExecute(AbstractPollingMessageListenerContainer.java:325)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.receiveAndExecute(AbstractPollingMessageListenerContainer.java:243)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.invokeListener(DefaultMessageListenerContainer.java:1101)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.executeOngoingLoop(DefaultMessageListenerContainer.java:1093)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:990)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.EndpointMessageListener] - Execution of JMS message listener failed. Caused by: [org.apache.camel.RuntimeCamelException - java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified]
+org.apache.camel.RuntimeCamelException: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.wrapRuntimeCamelException(ObjectHelper.java:1619)
+	at org.apache.camel.component.jms.EndpointMessageListener$EndpointMessageListenerAsyncCallback.done(EndpointMessageListener.java:186)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:107)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:562)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.invokeListener(AbstractMessageListenerContainer.java:500)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doExecuteListener(AbstractMessageListenerContainer.java:468)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.doReceiveAndExecute(AbstractPollingMessageListenerContainer.java:325)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.receiveAndExecute(AbstractPollingMessageListenerContainer.java:243)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.invokeListener(DefaultMessageListenerContainer.java:1101)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.executeOngoingLoop(DefaultMessageListenerContainer.java:1093)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:990)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.notNull(ObjectHelper.java:293)
+	at org.apache.camel.dataformat.bindy.BindyCsvFactory.bind(BindyCsvFactory.java:175)
+	at org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat.unmarshal(BindyCsvDataFormat.java:185)
+	at org.apache.camel.processor.UnmarshalProcessor.process(UnmarshalProcessor.java:69)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:121)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:83)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:662)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:590)
+	at org.apache.camel.processor.MulticastProcessor.process(MulticastProcessor.java:237)
+	at org.apache.camel.processor.Splitter.process(Splitter.java:104)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.util.AsyncProcessorHelper.process(AsyncProcessorHelper.java:109)
+	at org.apache.camel.processor.DelegateAsyncProcessor.process(DelegateAsyncProcessor.java:87)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:103)
+	... 11 more
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message Robocops,NA,true,Bill,Smith,100 N Park Ave.,Phoenix,AZ,85017,200-555-1000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@563b8638
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message MountainBikers,SA,true,George,Jungle,1101 Smith St.,Raleigh,NC,27519,600-555-7000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@2212077e
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message MicroservicesVision,WA,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,100-400-2000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@6990c5d8
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message Error,,,EU,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,900-000-4545
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route3] - >> Direct endpoint called
+Camel (camel-1) thread #0 - JmsConsumer[input] ERROR [org.apache.camel.processor.DefaultErrorHandler] - Failed delivery for (MessageId: queue_input_ID_localhost.localdomain-37394-1464968502382-3_2_1_1_1 on ExchangeId: ID-localhost-localdomain-32784-1464968502003-0-12). Exhausted after delivery attempt: 1 caught: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified. Processed by failure processor: FatalFallbackErrorHandler[Pipeline[[Channel[SetHeader(error-code, 111)], Channel[SetHeader(error-message, Simple: exception.message)], Channel[SetBody(Simple: ${body})], Channel[sendTo(Endpoint[direct://error])]]]]
+
+Message History
+---------------------------------------------------------------------------------------------------------------------------------------
+RouteId              ProcessorId          Processor                                                                        Elapsed (ms)
+[route1            ] [route1            ] [activemq://input                                                              ] [         7]
+[route1            ] [log1              ] [log                                                                           ] [         0]
+[route1            ] [unmarshal1        ] [unmarshal[org.apache.camel.model.DataFormatDefinition@6403c0d5]               ] [         1]
+[                  ] [setHeader1        ] [setHeader[error-code]                                                         ] [         0]
+[                  ] [setHeader2        ] [setHeader[error-message]                                                      ] [         0]
+[                  ] [setBody1          ] [setBody[simple{${body}}]                                                      ] [         0]
+[                  ] [to1               ] [direct:error                                                                  ] [         1]
+[route3            ] [log4              ] [log                                                                           ] [         0]
+[route3            ] [to3               ] [mock:error                                                                    ] [         1]
+
+Exchange
+---------------------------------------------------------------------------------------------------------------------------------------
+Exchange[
+	Id                  ID-localhost-localdomain-32784-1464968502003-0-12
+	ExchangePattern     InOnly
+	Headers             {breadcrumbId=ID-localhost-localdomain-32784-1464968502003-0-1, CamelRedelivered=false, CamelRedeliveryCounter=0, error-code=111, error-message=No position 11 defined for the field: 19728, line: 1 must be specified, JMSCorrelationID=null, JMSDeliveryMode=2, JMSDestination=queue://input, JMSExpiration=0, JMSMessageID=ID:localhost.localdomain-37394-1464968502382-3:2:1:1:1, JMSPriority=4, JMSRedelivered=true, JMSReplyTo=null, JMSTimestamp=1464968502552, JMSType=null, JMSXDeliveryCount=2, JMSXGroupID=null, JMSXUserID=null}
+	BodyType            String
+	Body                Error,,,EU,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,900-000-4545
+]
+
+Stacktrace
+---------------------------------------------------------------------------------------------------------------------------------------
+java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.notNull(ObjectHelper.java:293)
+	at org.apache.camel.dataformat.bindy.BindyCsvFactory.bind(BindyCsvFactory.java:175)
+	at org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat.unmarshal(BindyCsvDataFormat.java:185)
+	at org.apache.camel.processor.UnmarshalProcessor.process(UnmarshalProcessor.java:69)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:121)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:83)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:662)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:590)
+	at org.apache.camel.processor.MulticastProcessor.process(MulticastProcessor.java:237)
+	at org.apache.camel.processor.Splitter.process(Splitter.java:104)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.util.AsyncProcessorHelper.process(AsyncProcessorHelper.java:109)
+	at org.apache.camel.processor.DelegateAsyncProcessor.process(DelegateAsyncProcessor.java:87)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:103)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:562)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.invokeListener(AbstractMessageListenerContainer.java:500)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doExecuteListener(AbstractMessageListenerContainer.java:468)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.doReceiveAndExecute(AbstractPollingMessageListenerContainer.java:325)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.receiveAndExecute(AbstractPollingMessageListenerContainer.java:243)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.invokeListener(DefaultMessageListenerContainer.java:1101)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.executeOngoingLoop(DefaultMessageListenerContainer.java:1093)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:990)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.EndpointMessageListener] - Execution of JMS message listener failed. Caused by: [org.apache.camel.RuntimeCamelException - java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified]
+org.apache.camel.RuntimeCamelException: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.wrapRuntimeCamelException(ObjectHelper.java:1619)
+	at org.apache.camel.component.jms.EndpointMessageListener$EndpointMessageListenerAsyncCallback.done(EndpointMessageListener.java:186)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:107)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:562)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.invokeListener(AbstractMessageListenerContainer.java:500)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doExecuteListener(AbstractMessageListenerContainer.java:468)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.doReceiveAndExecute(AbstractPollingMessageListenerContainer.java:325)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.receiveAndExecute(AbstractPollingMessageListenerContainer.java:243)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.invokeListener(DefaultMessageListenerContainer.java:1101)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.executeOngoingLoop(DefaultMessageListenerContainer.java:1093)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:990)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.notNull(ObjectHelper.java:293)
+	at org.apache.camel.dataformat.bindy.BindyCsvFactory.bind(BindyCsvFactory.java:175)
+	at org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat.unmarshal(BindyCsvDataFormat.java:185)
+	at org.apache.camel.processor.UnmarshalProcessor.process(UnmarshalProcessor.java:69)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:121)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:83)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:662)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:590)
+	at org.apache.camel.processor.MulticastProcessor.process(MulticastProcessor.java:237)
+	at org.apache.camel.processor.Splitter.process(Splitter.java:104)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.util.AsyncProcessorHelper.process(AsyncProcessorHelper.java:109)
+	at org.apache.camel.processor.DelegateAsyncProcessor.process(DelegateAsyncProcessor.java:87)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:103)
+	... 11 more
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message Robocops,NA,true,Bill,Smith,100 N Park Ave.,Phoenix,AZ,85017,200-555-1000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@2e310845
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message MountainBikers,SA,true,George,Jungle,1101 Smith St.,Raleigh,NC,27519,600-555-7000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@44d20005
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message MicroservicesVision,WA,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,100-400-2000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@74656d57
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message Error,,,EU,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,900-000-4545
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route3] - >> Direct endpoint called
+Camel (camel-1) thread #0 - JmsConsumer[input] ERROR [org.apache.camel.processor.DefaultErrorHandler] - Failed delivery for (MessageId: queue_input_ID_localhost.localdomain-37394-1464968502382-3_2_1_1_1 on ExchangeId: ID-localhost-localdomain-32784-1464968502003-0-17). Exhausted after delivery attempt: 1 caught: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified. Processed by failure processor: FatalFallbackErrorHandler[Pipeline[[Channel[SetHeader(error-code, 111)], Channel[SetHeader(error-message, Simple: exception.message)], Channel[SetBody(Simple: ${body})], Channel[sendTo(Endpoint[direct://error])]]]]
+
+Message History
+---------------------------------------------------------------------------------------------------------------------------------------
+RouteId              ProcessorId          Processor                                                                        Elapsed (ms)
+[route1            ] [route1            ] [activemq://input                                                              ] [         5]
+[route1            ] [log1              ] [log                                                                           ] [         0]
+[route1            ] [unmarshal1        ] [unmarshal[org.apache.camel.model.DataFormatDefinition@6403c0d5]               ] [         1]
+[                  ] [setHeader1        ] [setHeader[error-code]                                                         ] [         0]
+[                  ] [setHeader2        ] [setHeader[error-message]                                                      ] [         0]
+[                  ] [setBody1          ] [setBody[simple{${body}}]                                                      ] [         0]
+[                  ] [to1               ] [direct:error                                                                  ] [         0]
+[route3            ] [log4              ] [log                                                                           ] [         0]
+[route3            ] [to3               ] [mock:error                                                                    ] [         0]
+
+Exchange
+---------------------------------------------------------------------------------------------------------------------------------------
+Exchange[
+	Id                  ID-localhost-localdomain-32784-1464968502003-0-17
+	ExchangePattern     InOnly
+	Headers             {breadcrumbId=ID-localhost-localdomain-32784-1464968502003-0-1, CamelRedelivered=false, CamelRedeliveryCounter=0, error-code=111, error-message=No position 11 defined for the field: 19728, line: 1 must be specified, JMSCorrelationID=null, JMSDeliveryMode=2, JMSDestination=queue://input, JMSExpiration=0, JMSMessageID=ID:localhost.localdomain-37394-1464968502382-3:2:1:1:1, JMSPriority=4, JMSRedelivered=true, JMSReplyTo=null, JMSTimestamp=1464968502552, JMSType=null, JMSXDeliveryCount=3, JMSXGroupID=null, JMSXUserID=null}
+	BodyType            String
+	Body                Error,,,EU,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,900-000-4545
+]
+
+Stacktrace
+---------------------------------------------------------------------------------------------------------------------------------------
+java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.notNull(ObjectHelper.java:293)
+	at org.apache.camel.dataformat.bindy.BindyCsvFactory.bind(BindyCsvFactory.java:175)
+	at org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat.unmarshal(BindyCsvDataFormat.java:185)
+	at org.apache.camel.processor.UnmarshalProcessor.process(UnmarshalProcessor.java:69)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:121)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:83)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:662)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:590)
+	at org.apache.camel.processor.MulticastProcessor.process(MulticastProcessor.java:237)
+	at org.apache.camel.processor.Splitter.process(Splitter.java:104)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.util.AsyncProcessorHelper.process(AsyncProcessorHelper.java:109)
+	at org.apache.camel.processor.DelegateAsyncProcessor.process(DelegateAsyncProcessor.java:87)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:103)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:562)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.invokeListener(AbstractMessageListenerContainer.java:500)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doExecuteListener(AbstractMessageListenerContainer.java:468)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.doReceiveAndExecute(AbstractPollingMessageListenerContainer.java:325)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.receiveAndExecute(AbstractPollingMessageListenerContainer.java:243)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.invokeListener(DefaultMessageListenerContainer.java:1101)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.executeOngoingLoop(DefaultMessageListenerContainer.java:1093)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:990)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.EndpointMessageListener] - Execution of JMS message listener failed. Caused by: [org.apache.camel.RuntimeCamelException - java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified]
+org.apache.camel.RuntimeCamelException: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.wrapRuntimeCamelException(ObjectHelper.java:1619)
+	at org.apache.camel.component.jms.EndpointMessageListener$EndpointMessageListenerAsyncCallback.done(EndpointMessageListener.java:186)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:107)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:562)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.invokeListener(AbstractMessageListenerContainer.java:500)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doExecuteListener(AbstractMessageListenerContainer.java:468)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.doReceiveAndExecute(AbstractPollingMessageListenerContainer.java:325)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.receiveAndExecute(AbstractPollingMessageListenerContainer.java:243)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.invokeListener(DefaultMessageListenerContainer.java:1101)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.executeOngoingLoop(DefaultMessageListenerContainer.java:1093)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:990)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.notNull(ObjectHelper.java:293)
+	at org.apache.camel.dataformat.bindy.BindyCsvFactory.bind(BindyCsvFactory.java:175)
+	at org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat.unmarshal(BindyCsvDataFormat.java:185)
+	at org.apache.camel.processor.UnmarshalProcessor.process(UnmarshalProcessor.java:69)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:121)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:83)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:662)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:590)
+	at org.apache.camel.processor.MulticastProcessor.process(MulticastProcessor.java:237)
+	at org.apache.camel.processor.Splitter.process(Splitter.java:104)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.util.AsyncProcessorHelper.process(AsyncProcessorHelper.java:109)
+	at org.apache.camel.processor.DelegateAsyncProcessor.process(DelegateAsyncProcessor.java:87)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:103)
+	... 11 more
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message Robocops,NA,true,Bill,Smith,100 N Park Ave.,Phoenix,AZ,85017,200-555-1000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@18c32958
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message MountainBikers,SA,true,George,Jungle,1101 Smith St.,Raleigh,NC,27519,600-555-7000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@2d2c5c68
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message MicroservicesVision,WA,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,100-400-2000
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Message marshalled : org.acme.Customer@89ba06b
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.JmsBinding] - Cannot determine specific JmsMessage type to use from body class. Will use generic JmsMessage. Body class: org.acme.Customer. If you want to send a POJO then your class might need to implement java.io.Serializable, or you can force a specific type by setting the jmsMessageType option on the JMS endpoint.
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route1] - Incoming JMS message Error,,,EU,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,900-000-4545
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [route3] - >> Direct endpoint called
+Camel (camel-1) thread #0 - JmsConsumer[input] ERROR [org.apache.camel.processor.DefaultErrorHandler] - Failed delivery for (MessageId: queue_input_ID_localhost.localdomain-37394-1464968502382-3_2_1_1_1 on ExchangeId: ID-localhost-localdomain-32784-1464968502003-0-22). Exhausted after delivery attempt: 1 caught: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified. Processed by failure processor: FatalFallbackErrorHandler[Pipeline[[Channel[SetHeader(error-code, 111)], Channel[SetHeader(error-message, Simple: exception.message)], Channel[SetBody(Simple: ${body})], Channel[sendTo(Endpoint[direct://error])]]]]
+
+Message History
+---------------------------------------------------------------------------------------------------------------------------------------
+RouteId              ProcessorId          Processor                                                                        Elapsed (ms)
+[route1            ] [route1            ] [activemq://input                                                              ] [         6]
+[route1            ] [log1              ] [log                                                                           ] [         0]
+[route1            ] [unmarshal1        ] [unmarshal[org.apache.camel.model.DataFormatDefinition@6403c0d5]               ] [         1]
+[                  ] [setHeader1        ] [setHeader[error-code]                                                         ] [         0]
+[                  ] [setHeader2        ] [setHeader[error-message]                                                      ] [         0]
+[                  ] [setBody1          ] [setBody[simple{${body}}]                                                      ] [         0]
+[                  ] [to1               ] [direct:error                                                                  ] [         0]
+[route3            ] [log4              ] [log                                                                           ] [         0]
+[route3            ] [to3               ] [mock:error                                                                    ] [         0]
+
+Exchange
+---------------------------------------------------------------------------------------------------------------------------------------
+Exchange[
+	Id                  ID-localhost-localdomain-32784-1464968502003-0-22
+	ExchangePattern     InOnly
+	Headers             {breadcrumbId=ID-localhost-localdomain-32784-1464968502003-0-1, CamelRedelivered=false, CamelRedeliveryCounter=0, error-code=111, error-message=No position 11 defined for the field: 19728, line: 1 must be specified, JMSCorrelationID=null, JMSDeliveryMode=2, JMSDestination=queue://input, JMSExpiration=0, JMSMessageID=ID:localhost.localdomain-37394-1464968502382-3:2:1:1:1, JMSPriority=4, JMSRedelivered=true, JMSReplyTo=null, JMSTimestamp=1464968502552, JMSType=null, JMSXDeliveryCount=4, JMSXGroupID=null, JMSXUserID=null}
+	BodyType            String
+	Body                Error,,,EU,true,Fred,Quicksand,202 Barney Blvd.,Rock City,MI,19728,900-000-4545
+]
+
+Stacktrace
+---------------------------------------------------------------------------------------------------------------------------------------
+java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.notNull(ObjectHelper.java:293)
+	at org.apache.camel.dataformat.bindy.BindyCsvFactory.bind(BindyCsvFactory.java:175)
+	at org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat.unmarshal(BindyCsvDataFormat.java:185)
+	at org.apache.camel.processor.UnmarshalProcessor.process(UnmarshalProcessor.java:69)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:121)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:83)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:662)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:590)
+	at org.apache.camel.processor.MulticastProcessor.process(MulticastProcessor.java:237)
+	at org.apache.camel.processor.Splitter.process(Splitter.java:104)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.util.AsyncProcessorHelper.process(AsyncProcessorHelper.java:109)
+	at org.apache.camel.processor.DelegateAsyncProcessor.process(DelegateAsyncProcessor.java:87)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:103)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:562)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.invokeListener(AbstractMessageListenerContainer.java:500)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doExecuteListener(AbstractMessageListenerContainer.java:468)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.doReceiveAndExecute(AbstractPollingMessageListenerContainer.java:325)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.receiveAndExecute(AbstractPollingMessageListenerContainer.java:243)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.invokeListener(DefaultMessageListenerContainer.java:1101)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.executeOngoingLoop(DefaultMessageListenerContainer.java:1093)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:990)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Camel (camel-1) thread #0 - JmsConsumer[input] WARN [org.apache.camel.component.jms.EndpointMessageListener] - Execution of JMS message listener failed. Caused by: [org.apache.camel.RuntimeCamelException - java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified]
+org.apache.camel.RuntimeCamelException: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.wrapRuntimeCamelException(ObjectHelper.java:1619)
+	at org.apache.camel.component.jms.EndpointMessageListener$EndpointMessageListenerAsyncCallback.done(EndpointMessageListener.java:186)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:107)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:562)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.invokeListener(AbstractMessageListenerContainer.java:500)
+	at org.springframework.jms.listener.AbstractMessageListenerContainer.doExecuteListener(AbstractMessageListenerContainer.java:468)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.doReceiveAndExecute(AbstractPollingMessageListenerContainer.java:325)
+	at org.springframework.jms.listener.AbstractPollingMessageListenerContainer.receiveAndExecute(AbstractPollingMessageListenerContainer.java:243)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.invokeListener(DefaultMessageListenerContainer.java:1101)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.executeOngoingLoop(DefaultMessageListenerContainer.java:1093)
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:990)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.IllegalArgumentException: No position 11 defined for the field: 19728, line: 1 must be specified
+	at org.apache.camel.util.ObjectHelper.notNull(ObjectHelper.java:293)
+	at org.apache.camel.dataformat.bindy.BindyCsvFactory.bind(BindyCsvFactory.java:175)
+	at org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat.unmarshal(BindyCsvDataFormat.java:185)
+	at org.apache.camel.processor.UnmarshalProcessor.process(UnmarshalProcessor.java:69)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:121)
+	at org.apache.camel.processor.Pipeline.process(Pipeline.java:83)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:662)
+	at org.apache.camel.processor.MulticastProcessor.doProcessSequential(MulticastProcessor.java:590)
+	at org.apache.camel.processor.MulticastProcessor.process(MulticastProcessor.java:237)
+	at org.apache.camel.processor.Splitter.process(Splitter.java:104)
+	at org.apache.camel.processor.RedeliveryErrorHandler.process(RedeliveryErrorHandler.java:448)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.processor.CamelInternalProcessor.process(CamelInternalProcessor.java:191)
+	at org.apache.camel.util.AsyncProcessorHelper.process(AsyncProcessorHelper.java:109)
+	at org.apache.camel.processor.DelegateAsyncProcessor.process(DelegateAsyncProcessor.java:87)
+	at org.apache.camel.component.jms.EndpointMessageListener.onMessage(EndpointMessageListener.java:103)
+	... 11 more
+main INFO [org.fuse.usecase.OnExceptionDLQWithTXTest] - ********************************************************************************
+main INFO [org.fuse.usecase.OnExceptionDLQWithTXTest] - Testing done: shouldGetMessageWithinDLQ(org.fuse.usecase.OnExceptionDLQWithTXTest)
+main INFO [org.fuse.usecase.OnExceptionDLQWithTXTest] - Took: 0.281 seconds (281 millis)
+main INFO [org.fuse.usecase.OnExceptionDLQWithTXTest] - ********************************************************************************
+main INFO [org.apache.camel.impl.DefaultCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-1) is shutting down
+main INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Starting to graceful shutdown 3 routes (timeout 10 seconds)
+Camel (camel-1) thread #2 - ShutdownTask INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Route: route3 shutdown complete, was consuming from: Endpoint[direct://error]
+Camel (camel-1) thread #2 - ShutdownTask INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Route: route2 shutdown complete, was consuming from: Endpoint[activemq://output]
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [org.apache.activemq.broker.TransportConnector] - Connector vm://test-broker-1 stopped
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [org.apache.activemq.broker.BrokerService] - Apache ActiveMQ 5.11.0.redhat-621084 (test-broker-1, ID:localhost.localdomain-37394-1464968502382-0:1) is shutting down
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [org.apache.activemq.broker.BrokerService] - Apache ActiveMQ 5.11.0.redhat-621084 (test-broker-1, ID:localhost.localdomain-37394-1464968502382-0:1) uptime 1.272 seconds
+Camel (camel-1) thread #0 - JmsConsumer[input] INFO [org.apache.activemq.broker.BrokerService] - Apache ActiveMQ 5.11.0.redhat-621084 (test-broker-1, ID:localhost.localdomain-37394-1464968502382-0:1) is shutdown
+Camel (camel-1) thread #2 - ShutdownTask INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Route: route1 shutdown complete, was consuming from: Endpoint[activemq://input]
+main INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Graceful shutdown of 3 routes completed in 1 seconds
+main INFO [org.apache.camel.impl.DefaultCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-1) uptime 1.427 seconds
+main INFO [org.apache.camel.impl.DefaultCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-1) is shutdown in 1.008 seconds
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.736 sec - in org.fuse.usecase.OnExceptionDLQWithTXTest
+Running org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest
+Database created successfully...
+main INFO [org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest] - ********************************************************************************
+main INFO [org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest] - Testing: shouldGetMessageWithinDLQ(org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest)
+main INFO [org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest] - ********************************************************************************
+main INFO [org.springframework.context.support.ClassPathXmlApplicationContext] - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@5ddeb7cb: startup date [Fri Jun 03 11:41:43 EDT 2016]; root of context hierarchy
+main INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - Loading XML bean definitions from class path resource [META-INF/spring/local/activemq-broker.xml]
+main INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - Loading XML bean definitions from class path resource [META-INF/spring/camel-context.xml]
+main INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Overriding bean definition for bean 'error-queue-endpoint': replacing [Generic bean: class [org.apache.camel.spring.CamelEndpointFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null] with [Generic bean: class [org.apache.camel.spring.CamelEndpointFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null]
+main INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Overriding bean definition for bean 'output-queue-endpoint': replacing [Generic bean: class [org.apache.camel.spring.CamelEndpointFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null] with [Generic bean: class [org.apache.camel.spring.CamelEndpointFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null]
+main INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@5ac86ba5: defining beans [org.apache.activemq.xbean.XBeanBrokerService#0,usecaseDB,sql,jmsTransactionManager,myRedeliveryPolicy,jmsConnectionFactory,jmsConfig,amq-tx,amq-notx,properties,error-queue-endpoint,output-queue-endpoint,template,consumerTemplate,camel-2:beanPostProcessor,camel-2]; root of factory hierarchy
+main INFO [org.apache.activemq.store.kahadb.plist.PListStoreImpl] - PListStore:[/home/jlopez/eip-class/experienced-integration-labs/code/file-publish-and-fix-errors/routing/activemq-data/demo/tmp_storage] started
+main INFO [org.apache.activemq.broker.BrokerService] - Using Persistence Adapter: KahaDBPersistenceAdapter[/home/jlopez/eip-class/experienced-integration-labs/code/file-publish-and-fix-errors/routing/activemq-data/demo/KahaDB]
+JMX connector INFO [org.apache.activemq.broker.jmx.ManagementContext] - JMX consoles can connect to service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
+main INFO [org.apache.activemq.store.kahadb.MessageDatabase] - KahaDB is version 5
+main INFO [org.apache.activemq.store.kahadb.MessageDatabase] - Recovering from the journal @1:184922
+main INFO [org.apache.activemq.store.kahadb.MessageDatabase] - Recovery replayed 3 operations from the journal in 0.016 seconds.
+main INFO [org.apache.activemq.broker.BrokerService] - Apache ActiveMQ 5.11.0.redhat-621084 (demo, ID:localhost.localdomain-37394-1464968502382-0:2) is starting
+main INFO [org.apache.activemq.transport.TransportServerThreadSupport] - Listening for connections at: tcp://localhost.localdomain:61616
+main INFO [org.apache.activemq.broker.TransportConnector] - Connector tcp started
+main INFO [org.apache.activemq.broker.BrokerService] - Apache ActiveMQ 5.11.0.redhat-621084 (demo, ID:localhost.localdomain-37394-1464968502382-0:2) started
+main INFO [org.apache.activemq.broker.BrokerService] - For help or more information please see: http://activemq.apache.org
+main WARN [org.apache.activemq.broker.BrokerService] - Store limit is 102400 mb (current store usage is 0 mb). The data directory: /home/jlopez/eip-class/experienced-integration-labs/code/file-publish-and-fix-errors/routing/activemq-data/demo/KahaDB only has 7364 mb of usable space - resetting to maximum available disk space: 7364 mb
+main WARN [org.apache.activemq.broker.BrokerService] - Temporary Store limit is 51200 mb, whilst the temporary data directory: /home/jlopez/eip-class/experienced-integration-labs/code/file-publish-and-fix-errors/routing/activemq-data/demo/tmp_storage only has 7364 mb of usable space - resetting to maximum available 7364 mb.
+main INFO [org.springframework.jdbc.datasource.DriverManagerDataSource] - Loaded JDBC driver: org.h2.Driver
+main DEBUG [org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest] - setUp test
+main DEBUG [org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest] - Using created route builder: Routes: []
+main INFO [org.apache.camel.spring.SpringCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-2) is starting
+main INFO [org.apache.camel.management.DefaultManagementStrategy] - JMX is disabled
+main INFO [org.apache.camel.impl.converter.DefaultTypeConverter] - Loaded 186 type converters
+main INFO [org.apache.camel.spring.SpringCamelContext] - AllowUseOriginalMessage is enabled. If access to the original message is not needed, then its recommended to turn this option off as it may improve performance.
+main INFO [org.apache.camel.spring.SpringCamelContext] - StreamCaching is not in use. If using streams then its recommended to enable stream caching. See more details at http://camel.apache.org/stream-caching.html
+main INFO [org.apache.camel.component.jackson.JacksonDataFormat] - Registering module: com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule@5e3a39cd
+main INFO [org.apache.camel.spring.SpringCamelContext] - Route: direct-error-queue started and consuming from: Endpoint[direct://error-queue]
+main INFO [org.apache.camel.spring.SpringCamelContext] - Route: file-queue started and consuming from: Endpoint[file://src/data/json]
+main INFO [org.apache.camel.spring.SpringCamelContext] - Route: queue-split-transform-queue started and consuming from: Endpoint[amq-notx://usecase-input]
+main INFO [org.apache.camel.spring.SpringCamelContext] - Route: route4 started and consuming from: Endpoint[amq-notx://queue:error-queue]
+main INFO [org.apache.camel.spring.SpringCamelContext] - Total 4 routes, of which 4 is started.
+main INFO [org.apache.camel.spring.SpringCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-2) started in 0.242 seconds
+main DEBUG [org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest] - Routing Rules are: [EventDrivenConsumerRoute[Endpoint[direct://error-queue] -> Pipeline[[Channel[Log(direct-error-queue)[++++++++++++++++ Inside direct:error-queue...]], Channel[sendTo(Endpoint[activemq://queue:error-queue])]]]], EventDrivenConsumerRoute[Endpoint[file://src/data/json] -> Pipeline[[Channel[Unmarshal[org.apache.camel.component.jackson.JacksonDataFormat@7f02251]], Channel[sendTo(Endpoint[amq-notx://usecase-input])]]]], EventDrivenConsumerRoute[Endpoint[amq-notx://usecase-input] -> Pipeline[[Channel[Log(queue-split-transform-queue)[++++++++++++++++ Inside direct:split-transform-queue...]], Channel[sendTo(Endpoint[amq-notx://queue:output-queue])]]]], EventDrivenConsumerRoute[Endpoint[amq-notx://queue:error-queue] -> Channel[sendTo(Endpoint[sql://INSERT%20INTO%20USECASE.T_ERROR(ID,%20ERROR_CODE,%20ERROR_MESSAGE,%20MESSAGE,%20STATUS)%20VALUES%20(:%231,%20:%23111,%20:%23message,%20:%23message,%20:%23message)?dataSource=usecaseDB])]]]
+main INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Starting to graceful shutdown 1 routes (timeout 10 seconds)
+Camel (camel-2) thread #24 - ShutdownTask INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Route: direct-error-queue shutdown complete, was consuming from: Endpoint[direct://error-queue]
+main INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Graceful shutdown of 1 routes completed in 0 seconds
+main INFO [org.apache.camel.spring.SpringCamelContext] - Route: direct-error-queue is stopped, was consuming from: Endpoint[direct://error-queue]
+main INFO [org.apache.camel.spring.SpringCamelContext] - Route: direct-error-queue is shutdown and removed, was consuming from: Endpoint[direct://error-queue]
+main INFO [org.apache.camel.builder.AdviceWithTasks] - AdviceWith (error-queue-endpoint) : [To[activemq:queue:error-queue]] --> replace [pipeline -> [[To[mock:error]]]]
+main INFO [org.apache.camel.model.RouteDefinition] - AdviceWith route after: Route(direct-error-queue)[[From[direct:error-queue]] -> [OnException[[class java.lang.IllegalArgumentException] -> [Log[++++++++++++++++ Sending exception to error-queue...], To[direct:error-queue]]], Log[++++++++++++++++ Inside direct:error-queue...], pipeline -> [[To[mock:error]]]]]
+main INFO [org.apache.camel.spring.SpringCamelContext] - Route: direct-error-queue started and consuming from: Endpoint[direct://error-queue]
+main INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Starting to graceful shutdown 1 routes (timeout 10 seconds)
+Camel (camel-2) thread #24 - ShutdownTask INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Route: queue-split-transform-queue shutdown complete, was consuming from: Endpoint[amq-notx://usecase-input]
+main INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Graceful shutdown of 1 routes completed in 1 seconds
+main INFO [org.apache.camel.spring.SpringCamelContext] - Route: queue-split-transform-queue is stopped, was consuming from: Endpoint[amq-notx://usecase-input]
+main INFO [org.apache.camel.spring.SpringCamelContext] - Route: queue-split-transform-queue is shutdown and removed, was consuming from: Endpoint[amq-notx://usecase-input]
+main INFO [org.apache.camel.builder.AdviceWithTasks] - AdviceWith (output-queue-endpoint) : [To[amq-notx:queue:output-queue]] --> after [pipeline -> [[To[mock:output]]]]
+main INFO [org.apache.camel.model.RouteDefinition] - AdviceWith route after: Route(queue-split-transform-queue)[[From[amq-notx:usecase-input]] -> [OnException[[class java.lang.IllegalArgumentException] -> [Log[++++++++++++++++ Sending exception to error-queue...], To[direct:error-queue]]], Log[++++++++++++++++ Inside direct:split-transform-queue...], To[amq-notx:queue:output-queue], pipeline -> [[To[mock:output]]]]]
+main INFO [org.apache.camel.spring.SpringCamelContext] - Route: queue-split-transform-queue started and consuming from: Endpoint[amq-notx://usecase-input]
+main INFO [org.apache.camel.spring.SpringCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-2) is starting
+main INFO [org.apache.camel.spring.SpringCamelContext] - Total 4 routes, of which 4 is started.
+main INFO [org.apache.camel.spring.SpringCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-2) started in 0.000 seconds
+main INFO [org.apache.camel.component.mock.MockEndpoint] - Asserting: Endpoint[mock://error] is satisfied
+Camel (camel-2) thread #28 - JmsConsumer[usecase-input] INFO [queue-split-transform-queue] - ++++++++++++++++ Inside direct:split-transform-queue...
+main INFO [org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest] - ********************************************************************************
+main INFO [org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest] - Testing done: shouldGetMessageWithinDLQ(org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest)
+main INFO [org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest] - Took: 11.113 seconds (11113 millis)
+main INFO [org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest] - ********************************************************************************
+main INFO [org.apache.camel.spring.SpringCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-2) is shutting down
+main INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Starting to graceful shutdown 4 routes (timeout 10 seconds)
+Camel (camel-2) thread #24 - ShutdownTask INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Route: queue-split-transform-queue shutdown complete, was consuming from: Endpoint[amq-notx://usecase-input]
+Camel (camel-2) thread #24 - ShutdownTask INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Route: direct-error-queue shutdown complete, was consuming from: Endpoint[direct://error-queue]
+Camel (camel-2) thread #24 - ShutdownTask INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Route: route4 shutdown complete, was consuming from: Endpoint[amq-notx://queue:error-queue]
+Camel (camel-2) thread #24 - ShutdownTask INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Route: file-queue shutdown complete, was consuming from: Endpoint[file://src/data/json]
+main INFO [org.apache.camel.impl.DefaultShutdownStrategy] - Graceful shutdown of 4 routes completed in 1 seconds
+main INFO [org.apache.camel.spring.SpringCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-2) uptime 11.054 seconds
+main INFO [org.apache.camel.spring.SpringCamelContext] - Apache Camel 2.15.1.redhat-621084 (CamelContext: camel-2) is shutdown in 1.005 seconds
+main INFO [org.springframework.context.support.ClassPathXmlApplicationContext] - Closing org.springframework.context.support.ClassPathXmlApplicationContext@5ddeb7cb: startup date [Fri Jun 03 11:41:43 EDT 2016]; root of context hierarchy
+main INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@5ac86ba5: defining beans [org.apache.activemq.xbean.XBeanBrokerService#0,usecaseDB,sql,jmsTransactionManager,myRedeliveryPolicy,jmsConnectionFactory,jmsConfig,amq-tx,amq-notx,properties,error-queue-endpoint,output-queue-endpoint,template,consumerTemplate,camel-2:beanPostProcessor,camel-2]; root of factory hierarchy
+main INFO [org.apache.activemq.broker.BrokerService] - Apache ActiveMQ 5.11.0.redhat-621084 (demo, ID:localhost.localdomain-37394-1464968502382-0:2) is shutting down
+main INFO [org.apache.activemq.broker.TransportConnector] - Connector tcp stopped
+main INFO [org.apache.activemq.store.kahadb.plist.PListStoreImpl] - PListStore:[/home/jlopez/eip-class/experienced-integration-labs/code/file-publish-and-fix-errors/routing/activemq-data/demo/tmp_storage] stopped
+main INFO [org.apache.activemq.store.kahadb.KahaDBStore] - Stopping async queue tasks
+main INFO [org.apache.activemq.store.kahadb.KahaDBStore] - Stopping async topic tasks
+main INFO [org.apache.activemq.store.kahadb.KahaDBStore] - Stopped KahaDB
+main INFO [org.apache.activemq.broker.BrokerService] - Apache ActiveMQ 5.11.0.redhat-621084 (demo, ID:localhost.localdomain-37394-1464968502382-0:2) uptime 12.860 seconds
+main INFO [org.apache.activemq.broker.BrokerService] - Apache ActiveMQ 5.11.0.redhat-621084 (demo, ID:localhost.localdomain-37394-1464968502382-0:2) is shutdown
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 13.869 sec <<< FAILURE! - in org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest
+shouldGetMessageWithinDLQ(org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest)  Time elapsed: 13.869 sec  <<< FAILURE!
+java.lang.AssertionError: mock://error Received message count. Expected: <1> but was: <0>
+	at org.fuse.usecase.OnExceptionDLQWithTxSpringRoutesTest.shouldGetMessageWithinDLQ(OnExceptionDLQWithTxSpringRoutesTest.java:98)
+
+
+Results :
+
+Failed tests: 
+  OnExceptionDLQWithTxSpringRoutesTest.shouldGetMessageWithinDLQ:98 mock://error Received message count. Expected: <1> but was: <0>
+
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 18.273 s
+[INFO] Finished at: 2016-06-03T11:41:57-04:00
+[INFO] Final Memory: 32M/319M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.19.1:test (default-test) on project routing: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /home/jlopez/eip-class/experienced-integration-labs/code/file-publish-and-fix-errors/routing/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
